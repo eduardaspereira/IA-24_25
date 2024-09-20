@@ -59,9 +59,41 @@ class BestFirst {
                 (s1, s2) -> (int) Math.signum(s1.getG()-s2.getG()));
         fechados = new HashMap<> ();
         abertos.add(new State(s, null));
-        List<State> sucs;
 
-        //TODO
+        while (!abertos.isEmpty()) {
+            // Remove the state with the lowest cost from the open set
+            actual = abertos.poll();
+
+            // Check if this state is the goal state
+            if (actual.layout.isGoal(objective)) {
+                // Create a list to store the solution path
+                List<State> solutionPath = new ArrayList<>();
+                State current = actual;
+                while (current != null) {
+                    solutionPath.add(current);
+                    current = current.father;
+                }
+                // Reverse the path and return an iterator
+                Collections.reverse(solutionPath);
+                return solutionPath.iterator();
+            }
+
+            // Add the current state to the closed set
+            fechados.put(actual.layout, actual);
+
+            // Generate the successors of the current state
+            List<State> sucs = sucessores(actual);
+            for (State succ : sucs) {
+                // If the successor is not in the closed set, add it to the open set
+                if (!fechados.containsKey(succ.layout)) {
+                    abertos.add(succ);
+                }
+            }
+        }
+
+        // If no solution was found, return an empty iterator
+        return Collections.emptyIterator();
     }
+
 }
 
