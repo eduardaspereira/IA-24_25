@@ -1,21 +1,31 @@
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-// Define the Ilayout interface with the required methods
+/**
+ * Interface Ilayout define as operações fundamentais para um layout/estado num problema de procura.
+ * Um layout deve fornecer uma lista de estados filhos, verificar se é o estado objetivo e retornar o custo para se mover para um sucessor.
+ * @author Andreia Qiu
+ * @author Eduarda Pereira
+ * @author Guilherme Carmo
+ * @version 1; 22/09/2024
+ */
 interface Ilayout {
+
     /**
-     * @return the children of the receiver.
+     * Retorna os sucessores (filhos) do layout atual.
+     * @return Lista dos layouts sucessores.
      */
     List<Ilayout> children();
 
     /**
-     * @return true if the receiver equals the argument l; return false otherwise.
+     * Verifica se o layout atual é igual ao layout objetivo fornecido.
+     * @param l Layout a ser comparado.
+     * @return true se o layout atual for igual ao argumento l; false caso contrário.
      */
     boolean isGoal(Ilayout l);
 
     /**
-     * @return the cost from the receiver to a successor.
+     * Retorna o custo da transição do layout atual para um layout sucessor.
+     * @return Custo da transição para o sucessor.
      */
     double getK();
 }
